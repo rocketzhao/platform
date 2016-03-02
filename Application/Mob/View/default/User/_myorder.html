@@ -1,0 +1,197 @@
+
+<div class="am-tabs" id="rank"style="font-size: 12px">
+    <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify"style="font-size: 12px">
+          <php>
+            if (is_login()==$uid) {
+        </php>
+        <li><a href="" style="padding: 0px">申请报名</a></li>
+        <li><a href="#succlesson" style="padding: 0px">报名成功</a></li>
+        <li><a href="#passlesson" style="padding: 0px">已参加</a></li>
+<php>
+    }
+</php>
+    </ul>
+    <div class="am-tabs-bd" style="border: none">
+        <div class="am-tab-panel am-active" >
+                    <volist name="order" id="vo">
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+          
+                        <div class="am-u-sm-9">
+                            <div>
+                                流水号 ：{$vo.orderid}
+                            </div>
+                            <div style="margin-top: 5px;">
+                                活动名 ：{$vo.title} 
+                            </div>
+							 <!--div style="margin-top: 5px;">
+                                开始时间 ：{$vo.lesson_date} 
+                            </div-->
+							 <div style="margin-top: 5px;">
+                                数量：[{$vo.count}人]
+                            </div>
+                            <div style="margin-top: 5px;">
+                                申请时间：{$vo.create_time}
+                            </div>
+							<!--div style="margin-top: 5px;">
+                                报名儿童：<br/>{$vo.childinfo}
+                            </div-->
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+
+      
+        </div>
+
+        <div class="am-tab-panel" id="succlesson">
+                 <volist name="comfirmorder" id="vo">
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+          
+                        <div class="am-u-sm-9">
+                            <div>
+                                流水号 ：{$vo.orderid}
+                            </div>
+                            <div style="margin-top: 5px;">
+                                活动名 ：{$vo.title} 
+                            </div>
+							 <!--div style="margin-top: 5px;">
+                                开始时间 ：{$vo.lesson_date} 
+                            </div-->
+							 <div style="margin-top: 5px;">
+                                数量：[{$vo.count}人]
+                            </div>
+                            <div style="margin-top: 5px;">
+                                申请时间：{$vo.create_time}
+                            </div>
+							<!--div style="margin-top: 5px;">
+                                报名儿童：<br/>{$vo.childinfo}
+                            </div-->
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+ 
+        </div>
+		
+		        <div class="am-tab-panel" id="passlesson">
+                 <volist name="pass" id="vo">
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+          
+                        <div class="am-u-sm-9">
+                            <div>
+                                流水号 ：{$vo.orderid}
+                            </div>
+                            <div style="margin-top: 5px;">
+                                活动名 ：{$vo.title} 
+                            </div>
+							 <!--div style="margin-top: 5px;">
+                                开始时间 ：{$vo.lesson_date} 
+                            </div-->
+							 <div style="margin-top: 5px;">
+                                数量：[{$vo.count}人]
+                            </div>
+                            <div style="margin-top: 5px;">
+                                申请时间：{$vo.create_time}
+                            </div>
+							<!--div style="margin-top: 5px;">
+                                报名儿童：<br/>{$vo.childinfo}
+                            </div-->
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+ 
+        </div>
+		
+
+        <div class="am-tab-panel">
+            <notempty name="userhead.defeat_title">
+		<form id="reapplytitle">
+
+                <volist name="userhead.defeat_title" id="v2">
+
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+                        <input type="hidden" value="{$v2.id}" name="rank_user_id">
+                        <div class="am-u-sm-3 am-text-center">
+                            <img style="width: 18px;margin-top: 30px;margin-left: 25px"
+                                 src="{$v2.logo}">
+                        </div>
+                        <div class="am-u-sm-9" >
+                            <div>
+                                头衔名称：{$v2.title.title}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                理由：{$v2.reason}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                申请时间：{$v2.create_time|friendlyDate}
+                            </div>
+                            <input  name="rank_id" value="{$v2.rank_id}" type="radio" >
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+                <div>
+                    <textarea placeholder="重新申请理由" name="reason" style="width: 100%;margin-bottom: 2px" ></textarea>
+                <a class="reapply am-btn-warning am-btn am-btn-block am-round" data-url="{:U('Mob/User/verify')}" ><span>重新申请</span></a>
+
+            </div>
+</form>
+
+                <else/>
+                <p class="text-muted"
+                   style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无该类型头衔哦～
+                    <br><br><br>
+                </p>
+            </notempty>
+        </div>
+        <div class="am-tab-panel">
+            <notempty name="userhead.apply_title">
+                <form id="ranktitle" >
+                <volist name="userhead.apply_title" id="v3">
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+                        <div class="am-u-sm-3 am-text-center">
+                            <img style="width: 18px;margin-top: 30px;margin-left: 25px"
+                                 src="{$v3.logo}">
+                        </div>
+                        <div class="am-u-sm-9">
+                            <div>
+                                头衔名称：{$v3.title}
+                            </div>
+                            <div>
+                            <input id="doinghandle" name="rank_id" value="{$v3.id}" type="radio" >
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+                <div>
+                <textarea  style="width: 100%;margin-bottom: 2px" placeholder="申请理由" name="reason"></textarea>
+                 </div>
+                    <button style="float: right" type="button" data-url="{:U('Mob/User/verify')}" class="am-btn-warning am-btn am-btn-block am-round applytitle">申请
+                    </button>
+                </form>
+                <else/>
+                <p class="text-muted"
+                   style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无该类型头衔哦～
+                    <br><br><br>
+                </p>
+            </notempty>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#rank').tabs();
+    })
+</script>

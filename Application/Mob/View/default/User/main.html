@@ -1,0 +1,122 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/user.js"></script>
+    <script src="__JS__/weibo.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/user.css"/>
+<style>
+.am-header {
+height: 34px;
+
+}
+
+.boxes {
+  width: 99.9999%;
+}
+
+.boxes .box {
+  height: 33.3333%;
+  color: #0B0B0B;
+  line-height: 70px;
+  text-align: center;
+  font-weight: bold;
+  transition: all .2s ease;
+}
+
+.boxes .box:hover {
+  font-size: 120%;
+/*  transform: rotate(360deg);*/
+
+ 
+}
+.boxes .a{
+
+            display: inline-block;
+			text-align: center;
+			width: 100%;
+			height: 99px;
+			line-height: 99px;
+
+}
+a:hover, a:focus {
+color: #E80441;;
+}
+
+
+.box-1 {
+  background-color: rgba(255, 255, 255, 0);
+}
+</style>
+
+	<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}' >
+			  <ul class="am-slides">
+			         <volist name="img" id="li_img">
+				   <li href="{$li_img.url}"><img src="{$li_img.source}">					 
+				  </li>
+					 </volist>
+
+			  </ul>
+			</div>
+
+    <div class="user-container " style="padding: 0;">
+
+		<ul class="am-avg-sm-3 boxes">
+	  <volist name="span" id="li_span">
+		<li class="box box-1" href="{$li_span.url}">
+			<a onclick="{$li_span.onclick}" href="{$li_span.url}"><span class="{$li_span.source}" style="width: 100%;
+			height: 35px;
+			margin: 10px auto 0;
+			display: block;
+			line-height: 35px;
+			font-size: 260%;"></span><p style="line-height: 11px;">{$li_span.desc}</p>
+		  </a>
+		  
+		 </li>
+	 </volist>
+
+		</ul>
+	 <hr data-am-widget="divider" style="" class="am-divider am-divider-default" />
+
+		<div class="am-panel am-panel-primary" data-am-scrollspy="{animation: 'fade', delay: 300}">
+		  <div class="am-panel-hd">{$quest.name}
+		  </div>
+		  <div class="am-panel-bd">{$quest.question_txt}
+		 <p style="color:red"> {$quest.answer_txt}</p>
+		  </div>
+		</div>
+        <div class="tab">
+
+        </div>
+
+
+<!------------------------------------->
+    </div>
+    <script src="__JS__/iscroll.js"></script>
+    <script>
+function do_checkin() {
+            var $this = $(this);
+            $.post("{:addons_url('CheckIn://CheckIn/doCheckIn')}", {}, function (res) {
+                if (res.status) {
+
+                   // $('.check-tab').find('.active').click();
+				   	$('#checkInSuccess').fadeIn(1000);
+					 setTimeout(function () {
+                     $('#checkInSuccess').fadeOut(1500);
+					 toast.success("签到成功 o(*^_^*)o 哦!");
+                     }, 5500);
+                    toast.success(res.info);
+
+				
+					 
+                } else {
+                    handleAjax(res);
+			
+                }
+
+               });
+
+
+        }
+
+    </script>
+</block>

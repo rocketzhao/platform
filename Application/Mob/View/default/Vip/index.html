@@ -1,0 +1,194 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class="addissue-container ">
+    <div class="addissue " id="article-post">
+        <form class="am-form " id="send_issue" data-am-validator data-url="{:U('Mob/Vip/doSendorder')}">
+            <input type="hidden" id="title" name="title" value="0">
+ 			<input type="hidden" name="vipid" id="vipid" value="0">
+			<input type="hidden" name="orderid" id="orderid" value="0">
+			<input type="hidden" name="vipcnt" id="vipcnt" value="0">
+			
+            <!--插入图片结束-->
+            <fieldset>
+			<div class="am-cf">
+            <h2>亲爱的客户：</h2>
+			<span>请认真阅读下的注意事项，确认后选择适合您的套餐并提交申请!<span>
+			 </div>
+			<div class="am-panel am-panel-danger" id="rule">
+			  <div class="am-panel-hd"> 注意事项</div>
+			  <div class="am-panel-bd" style="color:red;">
+				1. 如中途结束预定，未配送预定无条件退款<br/>
+                2. 我们所拍摄的菜品受季节和气候影响可能会有略微调整，如有顾虑，请联系预定顾问<br/>
+                3. 购卡客户需要提前2周预定预定，如需取消，请提前一周告知，如不通知，我们有权对该次菜品作扣次处理<br/>
+                4. 购买的服务预定需在1年内使用完毕，逾期预定自动取消作废，预定卡不得转让<br/>
+                5. 为保障菜品的食品品质安全，我们不配送外省市。特殊情况例外<br/>
+                6. 预定费用不包括特许保温和加急费用，如有特许请提前告知，否则不能确保满足<br/>
+                7. 对任何食品、花粉、植物、动物、药物或者其他物品过敏，请提前通知客服（并请于预订时备注过敏物品）<br/>
+
+			  </div>
+			</div>	
+							
+			    <label class="am-checkbox">
+				<input type="checkbox" id="ok" value="1" data-am-ucheck onclick="check()" required> 我同意该条款
+				</label>	
+                <!--专辑分类-还有个JS联动-->
+                <div class="am-cf">
+                    <div><label for="issue_top">VIP分类</label></div>
+
+                    <select id="count" name="vipfee" class="form-control " style="width: 100%;float: left" disabled="disabled" onchange="count1()">
+					     <volist name="vip" id="top">
+                            <option id="{$top.id}"  value="{$top.vipfee}"> 
+                             {$top.title}(使用次数-{$top.value}次）
+                            </option>
+                        </volist>
+                    </select>
+			  </div>
+
+				
+               <div class="am-form-group am-form-error">
+			   <label for="payment">选择缴费方式</label>
+                    <select id="payment" name="payment" class="form-control" style="width: 100%" disabled="disabled">
+                             <option value="支付宝" selected>支付宝</option>
+                             <option value="微信支付" >微信支付</option>
+                   
+                    </select>
+                </div>
+				
+			
+				
+
+				
+				 <div class="am-form-group am-form-error">
+				<h2 id="sumfee">费用金额为：0元</h2> 
+				 </div>
+                <button type="button" id="confirm" class="am-btn am-btn-primary am-btn-block" disabled="disabled" data-am-modal="{target: '#my-actions'}">  <i class="am-icon-shopping-cart"></i>预订</button>
+            </fieldset>
+        </form>
+
+    </div>
+	
+	<!------------>
+
+
+
+<div class="am-popup" id="my-actions">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title" id="ordname">卡订单</h4>
+      <span data-am-modal-close  class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd" id="info">
+      ...
+    </div>
+
+
+	<div class="am-modal-footer">
+      <span class="am-modal-btn am-btn-default " data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn am-btn-success"  id="vipok" onclick="submitorder()" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+  
+</div>
+	
+	
+<script type="text/javascript">
+    add_one_img();
+    $('#confirm').click(function () {
+        var data = $("#send_issue").serialize();
+        var url = $("#send_issue").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+			
+			
+			 var data=msg.info;
+			 var cdata='';
+			 $('#vipid').val(data.Id);
+			 $('#orderid').val(data.orderid);
+	         $('#title').val(data.title);
+			 $('#vipcnt').val(data.value);
+			
+			 
+			  //var cdata='testing';l
+			  document.getElementById('ordname').innerHTML ='<h4 class="am-popup-title" id="ordname">'+data.title+'订单'+'</h4>';
+			  document.getElementById('info').innerHTML = '<div class="am-popup-bd" > <ul class="am-list confirm-list"> <li>订单ID：&nbsp;'+data.orderid+'</li><li>订购卡：&nbsp;'+data.title+'&nbsp;&nbsp;&nbsp;&nbsp;</li><li>使用次数:&nbsp;'+data.value+'</li><li>相关介绍：'+data.desc+'&nbsp;&nbsp;</li><li>购卡后剩余总次数：'+data.sum+'[之前剩余'+data.before+'次] </li><h2 style="color:red;">总计费用:&nbsp;'+data.vipfee+'元</h2> <p>请于48小时内付款支付宝账号:<br/><p style="color:red">13651992892</p></p>';
+        
+               /* toast.success('预订课程成功!');
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/Issue/index')}";
+                }, 1000);
+				*/
+            } else {
+			alert(msg.status );    
+			toast.error('网络异常请重试!');
+
+            
+            }
+        }, 'json');
+    });
+	
+	
+function submitorder(){
+
+        var data = $("#send_issue").serialize();
+        var url = "{:U('Mob/vip/confirmorder')}";
+        $.post(url, data, function (msg) {
+            if (msg.status == 0) {
+			
+                toast.success('申请VIP卡成功!');
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/issue/orderlist')}";
+                }, 1000);
+			
+            } else {
+			        
+			toast.error('网络异常请重试!');
+
+            
+            }
+        }, 'json');
+	
+
+
+}	
+	
+	
+</script>
+<script>
+
+
+	function count1(){
+	 //var obj=document.getElementById('count'); 
+
+	 var value=$('#count').val(); 
+
+     
+	 document.getElementById('sumfee').innerHTML = '<h2 id="sumfee">费用金额为：'+1*value+'元!</h2>';
+	 
+	  }		
+	  
+	function check(){  
+    var ids = $('#ok').val();
+	
+     if (ids == 1 ) {
+	   // alert('选中');
+	
+        $('#count').removeAttr("disabled");
+		$('#payment').removeAttr("disabled");
+		$('#confirm').removeAttr("disabled");
+		   count1();
+		$('#ok').val(0);	
+        } else {
+        $('#count').attr("disabled","disabled");
+		$('#payment').attr("disabled","disabled");
+		$('#confirm').attr("disabled","disabled");
+		$('#ok').val(1);
+         document.getElementById('sumfee').innerHTML = '<h2 id="sumfee">费用金额为：0元!</h2>';
+        }
+		
+		
+
+	}	
+</script>
+</block>

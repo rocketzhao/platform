@@ -1,0 +1,3 @@
+<?php
+//000000000600a:2:{i:0;a:0:{}i:1;a:3:{i:0;a:4:{s:2:"id";s:3:"101";s:8:"avatar32";s:48:"/platform/Public/images/default_avatar_32_32.jpg";s:8:"nickname";s:6:"rocket";s:10:"search_key";s:12:"rocketrocket";}i:1;a:4:{s:2:"id";s:1:"1";s:8:"avatar32";s:48:"/platform/Public/images/default_avatar_32_32.jpg";s:8:"nickname";s:5:"admin";s:10:"search_key";s:10:"adminadmin";}i:2;a:4:{s:2:"id";s:3:"100";s:8:"avatar32";s:48:"/platform/Public/images/default_avatar_32_32.jpg";s:8:"nickname";s:4:"test";s:10:"search_key";s:8:"testtest";}}}
+?>

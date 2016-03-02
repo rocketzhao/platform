@@ -1,0 +1,162 @@
+					<div class="am-panel am-panel-default">
+					  <div class="am-panel am-panel-primary" id="1" >
+						<div class="am-panel-hd">第一位儿童</div>
+						
+					    <div class="am-panel-bd">
+						<!------>
+						<div data-role="fieldcontain">
+						<label for="name">*儿童姓名:</label>
+						<input type="text"  id="children[1][c_name]"  value="{$info[4]['儿童姓名']}" name="c_name[]" placeholder="输入您的姓名(中/英)" />
+						</div>
+					
+						<!--div data-role="fieldcontain">
+						<label for="name">身份证号码:(输入后可获得免费健康保险一份)</label>
+						<input type="text"  id="children[1][cid_no]" value="{$info[4]['儿童身份证号']}" name="cid_no[]" placeholder="输入孩子的身份证号码"  required="required"/>
+						</div-->
+				    	
+					
+						<div data-role="fieldcontain">
+					
+							<select id="children[1][c_sex]" data-native-menu="false"  name="c_sex[]">
+							<option >选择儿童性别</option>
+												
+							<option value="男" <if condition="$info[4]['儿童性别'] eq '男'"> selected </if> >男孩</option>
+							<option value="女" <if condition="$info[4]['儿童性别'] eq '女'"> selected </if> >女孩</option>
+
+						</select>
+						
+					   </div>
+					
+								
+						<div data-role="fieldcontain">
+									<label for="number">*年龄:</label>
+									<input type="number"  id="children[1][c_age]" name="c_age[]"  min="1" max="20" placeholder="输入您的年龄" required="required"/>
+					</div>
+						
+					<div data-role="fieldcontain">
+						<label for="c_comments">备注信息：</label>
+						<textarea  id="children[1][c_comments]" name="c_comments[]" >
+						</textarea>
+					 </div>
+				 </div>		<!------>
+					  </div>
+					  <div class="am-panel am-panel-secondary" id="2" style="display: none;">
+						<div class="am-panel-hd">第二位儿童</div>
+						<div class="am-panel-bd">
+						
+						<div data-role="fieldcontain">
+						<label for="name">*儿童姓名:</label>
+						<input type="text"  id="children[2][c_name]" name="c_name[]" placeholder="输入您的姓名(中/英)" />
+						</div>
+						<!---
+						<div data-role="fieldcontain">
+						<label for="name">身份证号码:(输入后可获得免费健康保险一份)</label>
+						<input type="text"  id="children[2][cid_no]" name="cid_no[]" placeholder="输入孩子的身份证号码" />
+						</div>
+				    	--->
+
+						<div data-role="fieldcontain">
+					
+							<select id="children[2][c_sex]" data-native-menu="false" name="c_sex[]" >
+							<option>选择儿童性别</option>
+							<option value="男" selected>男孩</option>
+							<option value="女">女孩</option>
+
+							</select>
+						</div>
+					
+								
+						<div data-role="fieldcontain">
+									<label for="number">*年龄:</label>
+									<input type="number"  id="children[2][c_age]" name="c_age[]" placeholder="输入您的年龄" min="1" max="20" required="required" />
+					</div>
+						
+					<div data-role="fieldcontain">
+						<label for="c_comments">备注信息：</label>
+						<textarea  id="children[2][c_comments]" name="c_comments[]" >
+						</textarea>
+					 </div>
+					 </div>		<!------>
+						
+					  </div>
+					  <div class="am-panel am-panel-success" id="3"style="display: none;">
+						<div class="am-panel-hd">第三位儿童</div>
+						<div class="am-panel-bd">
+						
+						<div data-role="fieldcontain">
+						<label for="name">*儿童姓名:</label>
+						<input type="text"  id="children[3][c_name]" name="c_name[]" placeholder="输入您的姓名(中/英)" />
+						</div>
+					<!---
+						<div data-role="fieldcontain">
+						<label for="name">身份证号码:(输入后可获得免费健康保险一份)</label>
+						<input type="text"  id="children[3][cid_no]" name="cid_no[]" placeholder="输入孩子的身份证号码"  />
+						</div>
+				    	--->
+
+						<div data-role="fieldcontain">
+					
+							<select id="children[3][c_sex]" data-native-menu="false" name="c_sex[]">
+							<option >选择儿童性别</option>
+							<option value="男" selected>男孩</option>
+							<option value="女">女孩</option>
+
+						</select>
+						
+				
+					</div>
+					
+								
+						<div data-role="fieldcontain">
+									<label for="number">*年龄:</label>
+									<input type="number"  id="children[3][c_age]" name="c_age[]" placeholder="输入您的年龄" min="1" max="20" required="required" />
+					</div>
+						
+					<div data-role="fieldcontain">
+						<label for="c_comments">备注信息：</label>
+						<textarea  id="children[3][c_comments]" name="c_comments[]" >
+						</textarea>
+					 </div>
+					 </div>		<!------>
+					  </div>
+					  
+					  <div class="am-panel am-panel-warning" id="4"style="display: none;">
+						<div class="am-panel-hd">第四位儿童</div>
+						<div class="am-panel-bd">
+					
+						<div data-role="fieldcontain">
+						<label for="name">*儿童姓名:</label>
+						<input type="text"  id="children[4][c_name]" name="c_name[]" placeholder="输入您的姓名(中/英)" />
+						</div>
+							<!---
+						<div data-role="fieldcontain">
+						<label for="name">身份证号码:(输入后可获得免费健康保险一份)</label>
+						<input type="text"  id="children[4][cid_no]" name="cid_no[]" placeholder="输入孩子的身份证号码" />
+						</div>
+				    	
+--->
+						<div data-role="fieldcontain">
+					
+							<select id="children[4][c_sex]"  data-native-menu="false" name="c_sex[]">
+							<option>选择儿童性别</option>
+							<option value="男" selected>男孩</option>
+							<option value="女">女孩</option>
+
+						</select>
+				
+					</div>
+					
+								
+						<div data-role="fieldcontain">
+									<label for="number">*年龄:</label>
+									<input type="number"  id="children[4][c_age]" name="c_age[]" placeholder="输入您的年龄" min="1" max="20" required="required" />
+					</div>
+						
+					<div data-role="fieldcontain">
+						<label for="c_comments">备注信息：</label>
+						<textarea  id="children[4][c_comments]" name="c_comments[]" >
+						</textarea>
+					 </div>
+				 </div>		<!------>
+					  </div>
+			</div>

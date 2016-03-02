@@ -1,0 +1,483 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/user.js"></script>
+    <script src="__JS__/weibo.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/user.css"/>
+    <link rel="stylesheet" href="__CSS__/apps/amazeui2.min.css"/>
+	
+
+    <div class="user-container " style="padding: 0;">
+
+  <include file="_pluspage"/>
+	
+		<ul class="am-nav">
+		  <li><a href="#" style="background-color: rgba(128, 129, 128, 0.08);">
+	          	 <div class="am-form-group am-form-file">              
+					
+				<div class="am-g">
+				  <div class="am-u-sm-4"><img class="am-img-thumbnail am-circle" src="{$user_info.avatar64}"></div>
+				  <div class="am-u-sm-6"><br/><span class="am-serif">昵称:{$user_info.nickname}</span><br/>
+			<div class="signature" style="width: 100%"><span>用户等级：
+                <if condition="$user_info['vip'] eq ''">
+                    普通用户
+                    <else/>
+                    <attr >{$user_info['vip'].title},[剩余次数：{$user_info['vip'].count}]</attr>
+                </if>
+            </span>
+                </div>
+				 <span id="score1"> 积分：{$user_info.score}</span><br/>
+                 <span > 头衔：{$user_info.title}</span>
+				</div>
+				  <div class="am-u-sm-2"></div>
+				</div>	
+					
+					
+		
+	
+		<i class="am-icon-chevron-right" style="/* vertical-align: middle; */float: right;margin-top: -30px;"></i>
+			  <input type="file" accept="image/*" capture="camera" name="picfile"/> 
+		  
+		</div>							 
+
+				  
+		  
+		</a> 
+		  </li>
+		 <li>
+		            <php>if(!$check){</php>
+					
+					<a id="checkin" class="am-btn"  style="background-color: rgba(128, 129, 128, 0.08);"  onclick="do_checkin();" data-role="do_checkin">
+          <i class="am-icon-pencil-square-o" style="size:18px;">今日签到</i><span><i class="am-icon-chevron-right"  style="float: right;"></i></a>
+		              <php>}else{</php>
+				<a id="checkin" class="am-btn"  style="background-color: rgba(128, 129, 128, 0.08);color:#FA8615;"  onclick="do_checkin();" data-role="do_checkin">
+          <i class="am-icon-paw" >今日已签</i><span><i class="am-icon-chevron-right"  style="float: right;"></i></a>		  
+					  
+                    <php>}</php>
+		</li>
+		  <li><a href="#" class="am-btn" style="background-color: rgba(128, 129, 128, 0.08);" data-am-modal="{target: '#my-popup'}" ><i class="am-icon-cog" >资料编辑 </i>
+		 <i class="am-icon-chevron-right" style="float: right;"></i></a>
+		  </li>
+		  <li><a href="#" class="am-btn"  style="background-color: rgba(128, 129, 128, 0.08);">
+          <i class="am-icon-user" >申请VIP</i><span><i class="am-icon-chevron-right"  style="float: right;"></i></a>
+		</li>
+		<li><a href="#" class="am-btn"  style="background-color: rgba(128, 129, 128, 0.08);"   data-am-modal="{target: '#my-pwd'}" >
+          <i class="am-icon-lock" >密码修改</i><span><i class="am-icon-chevron-right"  style="float: right;"></i></a>
+		</li>
+
+		<li><a href="{:U('/mob/issue/dateorder')}" class="am-btn"  style="background-color: rgba(128, 129, 128, 0.08);" >
+          <i class="am-icon-line-chart" >我的日程安排</i><span><i class="am-icon-chevron-right"  style="float: right;"></i></a>
+		</li>
+		<li><a class="am-btn"  style="background-color: rgba(128, 129, 128, 0.08);" onclick="wx_share();">
+          <i class="am-icon-gift" >转发测试</i><span><i class="am-icon-chevron-right"  style="float: right;"></i></a>
+		</li>
+		
+		</ul>
+		
+
+		
+        <div class="" style="padding-left: 20px ;font-size: 12px;height: 80px ">
+            <div style="padding:10px;position: relative ;top: -40px;">
+                <div class="am-cf">
+
+                    <div class="am-fl" style="margin-left: 10px">
+                        <div class="user_info"style="text-shadow: 1px 1px 4px rgba(0,0,0,.6); color: #fff;">
+           
+     
+                        <notempty name="user_info['tags']">
+                                <div class="">
+						<span>
+                        个人标签：
+                        <volist name="user_info['tags']" id="tag">
+                            &nbsp;<a href="{:U('people/index/index',array('tag'=>$tag['id']))}"
+                                     class="label label-badge label-default">{$tag.title}</a>&nbsp;
+                        </volist>
+						</span>
+                                </div>
+                            </notempty>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="tab">
+            <div class="user-mod ">
+                <div id="carousel" style="position: relative;height: 37px;">
+
+                    <div id="user-list">
+                        <!--a href="{:U('Mob/User/index',array('tab'=>'weibo','uid'=>$_GET['uid']))}"
+                        <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')"> class="current"</if>
+                        >微博</a>
+                        <a href="{:U('Mob/User/index',array('tab'=>'userhead','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'userhead'"> class="current"</if>
+                        >头衔</-->
+                        <a href="{:U('Mob/User/index',array('tab'=>'order','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'order'"> class="current"</if>
+                        >预订课程信息</>						
+						
+                        <a href="{:U('Mob/User/index',array('tab'=>'userdata','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'userdata'"> class="current"</if>
+                        >个人资料</a>
+                        <!--a href="{:U('Mob/User/index',array('tab'=>'focus','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'focus'"> class="current"</if>
+                        >关注</a-->
+                        <!--       <li><a>问答</a></li>-->
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="part-tab-con">
+                <div class="imgshow">
+                    <div class="ulclass">
+                        <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')">
+                            <notempty name="weibo">
+                                <volist name="weibo" id="vo">
+                                    <include file="_myweibo"/>
+                                </volist>
+                                <else/>
+                                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                                </div>
+                            </notempty>
+                        </if>
+                    </div>
+                    <!--div class="ulclass">
+                        <if condition="$_GET['tab'] eq 'news'">
+                            <notempty name="blog">
+                                <volist name="blog" id="vl">
+                                    <include file="_myblog"/>
+                                </volist>
+                                <else/>
+                                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                                </div>
+                            </notempty>
+
+                        </if>
+
+                    </div-->
+					 <div>
+                        <if condition="$_GET['tab'] eq 'order'">
+                            <include file="_myorder"/>
+                        </if>
+
+                    </div>
+					
+                    <!--div>
+                        <if condition="$_GET['tab'] eq 'userhead'">
+                            <include file="_myrank"/>
+                        </if>
+
+                    </div-->
+                    <div>
+                        <if condition="$_GET['tab'] eq 'userdata'">
+                            <include file="_myinformation"/>
+                        </if>
+
+                    </div>
+                    <php>
+                        if (is_login()==$uid) {
+                    </php>
+                    <div>
+                        <if condition="$_GET['tab'] eq 'focus'">
+                            <include file="_myfollowing"/>
+                        </if>
+                    </div>
+                    <php>
+                        }else{
+                    </php>
+                    <if condition="$_GET['tab'] eq 'focus'">
+                        <include file="_otherfollowing"/>
+                    </if>
+                    <php>
+                        }
+                    </php>
+
+                </div>
+                <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')">
+                    <if condition="$weibo[0][pid_count] eq 1">
+                        <div class="am-list-news-ft look-more">
+                            <a id="getmoreweibolist" data-url="{:U('Mob/User/addMoreWeibo')}" data-role="{$uid}"
+                                    >查看更多 &raquo;</a>
+                        </div>
+                    </if>
+                </if>
+				<!--
+                <if condition="$_GET['tab'] eq 'news'">
+                    <if condition="$blog[0][pid_count] eq 1">
+                        <div class="am-list-news-ft look-more">
+                            <a id="getmorebloglist" data-url="{:U('Mob/User/addMoreBlog')}" data-role="{$uid}"
+                                    >查看更多 &raquo;</a>
+                        </div>
+                    </if>
+                </if>
+				-->
+            </div>
+        </div>
+<!------------------------------------->
+<div class="am-popup" id="my-popup">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title">资料编辑</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd">
+			
+            <volist name="profile_group_list" id="vo">
+			          <h2>{$vo.profile_name}</h2>
+                    <form class="am-form"  action="{:U('Config/edit_expandinfo')}"  data-url="{:U('Mob/User/save/',array('role_id' => $vo['id']))}" id="send_info_{$vo.id}" method="post" class="ajax-form" style="background-color: rgba(75, 204, 234, 0.56);">
+           
+                          <fieldset>
+                                            
+                               
+                                 <volist name="vo.info_list" id="vl">
+								    <div class="am-cf">	  
+									   
+									    <if condition="$vl.field_name eq '儿童性别'">
+										 <label style="font-size: 17px;">{$vl.field_name}</label>
+										<select data-native-menu="false"  name="{$key}">
+										<option >选择儿童性别</option>
+										<option value="男" <if condition="$vl.field_data eq '男'"> selected </if> >男孩</option>
+										<option value="女" <if condition="$vl.field_data eq '女'"> selected </if> >女孩</option>
+
+									   </select>
+								
+									   	<else /> 
+										<label style="font-size: 17px;">{$vl.field_name}</label>
+									   <input type="text" class="am-modal-prompt-input" name="{$key}" 
+									   <if condition="$vl.field_data eq '还未设置'">
+									   placeholder="{$vl.field_data}"
+										<else /> value="{$vl.field_data}"
+										</if> > 
+										
+										
+										</if> 
+									   
+									</div>
+										
+                                 </volist>
+                              
+                                 <if condition="count($vo['info_list']) neq 0">
+								 <button class="am-btn am-btn-secondary am-btn-block" onclick="submitinfo({$vo.id})" id="submit_btn" data-am-modal-close>保存{$vo.profile_name}</button>
+							
+							
+                                 <else/>
+                                    <span class="expandinfo-noticeinfo">该扩展信息分组没有信息！</span>
+                                </if>
+                        
+                        </fieldset>
+                 
+                </form>
+             
+
+            </volist>
+
+	  
+	  
+    </div>
+  </div>
+</div>
+
+<div class="am-popup" id="my-pwd">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title">修改密码</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd">
+			 <form id="changePasswordForm"  action=""  data-url="{:U('/ucenter/config/dochangepassword')}" method="post" class="ajax-form">
+                <div class="form-group">
+                    <label for="inputOldPassword" class="col-xs-2 control-label" style="font-size: 17px;">旧密码</label>
+
+                    <div class="col-xs-8">
+                        <input type="password" class="am-modal-prompt-input" id="inputOldPassword" value="" name="old_password" placeholder="输入旧密码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNewPassword" class="col-xs-2 control-label" style="font-size: 17px;">新密码</label>
+
+                    <div class="col-xs-8">
+                        <input type="password" class="am-modal-prompt-input" id="inputNewPassword" value="" name="new_password" placeholder="输入新密码">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputConfirmPassword" class="col-xs-2 control-label" style="font-size: 17px;">确认密码</label>
+
+                    <div class="col-xs-8">
+                        <input type="password" class="am-modal-prompt-input" id="inputConfirmPassword" value="" name="confirm_password"" placeholder="输入确认密码">
+                    </div>
+                </div>
+				<br />
+                <div class="form-group">
+                           <button type="submit" class="am-btn am-btn-secondary am-btn-block" onclick="submitpwd()">保存</button>
+                
+                </div>
+            </form>
+    
+
+                                           
+                   
+	  
+    </div>
+  </div>
+</div>
+
+    </div>
+    <script src="__JS__/iscroll.js"></script>
+    <script>
+
+
+        var $carousel = document.getElementById('carousel'),
+                $box = document.getElementById('user-list'),
+
+                aArray = $box.querySelectorAll('a'),
+
+                aNum = aArray.length;
+        console.log(aNum);
+        console.log($("#user-list a:first-child").width());
+        $box.style.width = (aNum * $("#user-list a:first-child").width() + 10 + 'px');
+        console.log($box.style.width);
+
+        var myScroll = new iScroll('carousel', {
+            hideScrollbar: false,
+            hScroll: true,
+            bounce: true,
+            vScroll: false,
+            hScrollbar: false
+
+        });
+
+		
+		
+		
+	function submitinfo(id){
+
+        var data = $("#send_info_"+id).serialize();
+	    var url = $("#send_info_"+id).attr('data-url');
+     //   var url = "{:U('Mob/User/save')}";
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+			   if(msg.oper == 'update'){
+                toast.success('保存信息成功!');}else{
+				toast.success('新增信息成功!');
+				}
+			
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/user/index')}";
+                }, 1000);
+			
+            }else {
+			        
+			toast.error('网络异常请重试!');
+
+            
+            }
+        }, 'json');
+	
+
+
+   }	
+   
+   
+   		
+	function submitpwd(){
+
+        var data = $("#changePasswordForm").serialize();
+		 var url = $("#changePasswordForm").attr('data-url');
+     //   var url = "{:U('Mob/User/save')}";
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {			  
+                toast.success(msg.info);			
+            }else {			        
+			toast.error(msg.info);            
+            }
+        }, 'json');
+	
+
+
+   }
+   
+   
+   	function submitvip(id){
+     /*onclick="submitvip({$user_info.uid});"*/
+	    var data={'uid': id};
+     /*   var url = "{:U('Mob/User/vip')}";*/
+	   var url="dddd";
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+			   if(msg.oper == 'add'){
+					toast.success('申请信息递交成功!');
+			   }else{
+					toast.success(msg.msg);
+					}
+				
+					setTimeout(function () {
+						window.location.href= "{:U('Mob/user/index')}";
+					}, 500);
+				
+            }else { 
+			toast.error('网络异常请重试!');            
+            }
+        }, 'json');
+	
+
+
+   }	
+
+function do_checkin() {
+            var $this = $(this);
+            $.post("{:addons_url('CheckIn://CheckIn/doCheckIn')}", {}, function (res) {
+                if (res.status) {
+
+                   // $('.check-tab').find('.active').click();
+				   	$('#checkInSuccess').fadeIn(1000);
+					 setTimeout(function () {
+                     $('#checkInSuccess').fadeOut(1500);
+					 toast.success("签到成功 o(*^_^*)o 哦!");
+                     }, 5500);
+		             var txt=' 积分：'+<?php echo "'".($user_info['score']*1+2)."'";?>;
+				    $('#score1').html(txt);
+                    toast.success(res.info);
+					//alert('checkin');
+					var txt='<i class="am-icon-paw" >今日已签</i><span><i class="am-icon-chevron-right" style="float: right;"></i>';
+                   $('#checkin').html(txt);
+				   $('#checkin').css('disabled','disabled');
+				   $('#checkin').css('color','#FA8615');
+				
+					 
+                } else {
+					//alert('checked');
+				//	$('#checkInSuccess').css('display','inline');
+                    handleAjax(res);
+			
+                }
+
+                //location.reload();
+            });
+
+
+        }
+   
+         //检查两次输入的密码是否一致
+        $(function(){
+            $('#changePasswordForm').submit(function(e){
+                var newPassword = $('#inputNewPassword').val();
+                var confirmPassword = $('#inputConfirmPassword').val();
+                if(newPassword != confirmPassword) {
+                    toast.error('两次输入的密码不一致');
+                    e.stopPropagation();
+                    return false;
+                }
+            })
+        })
+  
+    </script>
+</block>

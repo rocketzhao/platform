@@ -1,0 +1,176 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class="addissue-container ">
+    <div class="addissue " id="article-post">
+        <form class="am-form " id="send_issue" data-am-validator data-url="{:U('Mob/Issue/doSendorder')}">
+            <input type="hidden" id="one_img_id" name="one_attach_id" value="{$issue.cover_id}">
+            <input type="hidden" name="issueId" value="{$issue.id}">
+
+            <!--插入图片结束-->
+            <fieldset>
+			<div class="am-cf">
+            <h2>亲爱的用户：</h2>
+			<span>请完成下列报名信息的填写，每位学生598元，提交后即报名成功！<span>
+			  </div>
+
+                <!--专辑分类-还有个JS联动-->
+                <div class="am-cf">
+                    <div><label for="issue_top">课程信息</label></div>
+
+                    <select id="issue_top" name="issue" class="form-control " style="width: 100%;float: left" readonly="true">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}"  <eq name="top['id']" value="$issue['issue_top']"> selected</eq> >
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+			  </div>
+			   <div class="am-cf">
+                    <select id="issue_second" name="date" class="form-control " style="width: 100%" readonly="true">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}">
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+                </div>
+				
+				
+                <!--专辑分类-还有个JS联动end-->
+				
+				<div class="am-form-group">
+                    <label for="title">活动标题	：</label>
+                    <input type="text" id="title" name="title" minlength="3" placeholder="" readonly="true" value="{$issue.title}"
+                           required/>
+                </div>
+
+
+                <!--div class="am-form-group">
+                    <label for="url">课程时间：</label>
+                    <if condition="$issue.is_edit eq 1">
+                        <input type="date" id="url" name="url"  value="{$issue.url}" readonly="true" required/>
+                    </if>
+                    <if condition="$issue.is_edit  eq 0">
+                        <input type="date" id="url" name="url" value="" required/>
+                    </if>
+                </div-->
+				
+				
+				<div class="am-form-group">
+				  <volist name="info[1]" id="info">
+				   <label>{$key}</label>
+					<input type="text"  value="{$info} " name="{$key}" />
+         
+                 </volist>
+				   
+                </div>
+			   <div class="am-form-group am-form-error">
+			   <label for="payment">选择缴费方式</label>
+                    <select id="payment" name="payment" class="form-control" style="width: 100%">
+                             <option value="支付宝" selected>支付宝</option>
+                             <option value="微信支付" >微信支付</option>
+                   
+                    </select>
+                </div>
+				
+							   <div class="am-form-group am-form-error">
+			   <label for="present">是否需要乘坐班车</label>
+                    <select id="takebus" name="takebus" class="form-control" style="width: 100%">
+                              <option value="是">是(具体信息由客服通知) </option>
+                             <option value="否">不需要</option>
+                   
+                    </select>
+                </div>
+				
+				
+			  <div class="am-form-group am-form-error">
+	
+                                 <select id="count" name="count"   onchange="count1();">
+                                                         <option value="1">报名儿童数量1人</option>
+                                                        <option value="2">报名儿童数量2人</option>
+                                                        <option value="3">报名儿童数量3人</option>
+                                                        <option value="4">报名儿童数量4人</option>
+                                                </select>
+                </div>
+				
+				   <include file="_childlist"/>
+				
+				 <div class="am-form-group am-form-error">
+				<h2 id="sumfee">费用金额为：598元</h2>
+				 </div>
+                <button type="button" id="confirm" class="am-btn am-btn-primary am-btn-block">  <i class="am-icon-shopping-cart"></i>预订课程</button>
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+<script type="text/javascript">
+    add_one_img();
+    $('#confirm').click(function () {
+        var data = $("#send_issue").serialize();
+        var url = $("#send_issue").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+                toast.success('预订课程成功!');
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/Issue/index')}";
+                }, 1000);
+            } else {
+			toast.error('网络异常请重试!');
+			for(var i in msg.info) 
+				{
+				//obj[i]=msg.info[i]; 
+				    alert(msg.info[i]);
+				} 
+            
+            }
+        }, 'json');
+    });
+</script>
+<script>
+    $(function () {
+        $('#issue_top').change(function () {
+            var pid = $(this).val();
+			
+            $.post("{:U('Mob/Issue/selectDropdown')}", {pid: pid}, function (data) {
+                $('#issue_second').html('');
+                $.each(data, function (index, element) {
+				            if(element.id == <?php echo $issue['issue_id']; ?>){
+                            $('#issue_second').append('<option value="' + element.id + '" selected>' + element.title + '</option>');
+							}else{
+							 $('#issue_second').append('<option value="' + element.id + '">' + element.title + '</option>');
+							}
+                        }
+                )
+            }, 'json');
+        });
+        $('#issue_top').change();
+    })
+
+    var ids = $('#one_img_id').val();
+    if (ids==0) {
+            $('.show_cover').hide();
+        } else {
+            $('.show_cover').show();
+        }
+
+	function count1(){
+	 //var obj=document.getElementById('count'); 
+
+	 var value=$('#count').val(); 
+
+	 for (var i=1;i<=4;i++){
+	 $('#'+i).css('display','none');
+	 }
+	 for (var i=1;i<=value;i++){
+	 $('#'+i).show();
+	 }
+	 
+	 document.getElementById('sumfee').innerHTML = '<h2 id="sumfee">费用金额为：'+598*value+'元!</h2>';
+	 
+	  }		
+		
+</script>
+</block>

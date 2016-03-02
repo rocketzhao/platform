@@ -1,0 +1,218 @@
+﻿<div class="am-modal-actions" id="my-action0">
+  <div class="am-modal-actions-group">
+                <php>$user=query_user(array('nickname','avatar64'));</php>
+	
+			     <php>
+                        if (is_login()) {
+                 </php>
+                 <ul class="am-list">
+				 <li id="user">
+               
+                    <a style="text-indent: 0px;" href="{:U('user/index')}">
+                        <img class="avatar-img" style="border-radius: 100%;width:64px;margin-top:20px "
+                             src="{$user.avatar64}">
+                    </a>
+					  <div class="am-text-center">
+                        <a class="am-text" style="width: 81px;  display: block; margin: 0 auto;">昵称:{$user.nickname}</a>
+                    </div>
+				 </li>
+                 </ul>
+				 <php>
+                     }
+                 </php>
+				  <ul class="am-list">
+                    <php>
+                        if (is_login()) {
+						$map['flag']=1;
+						$map['group']=1;
+						$menu=M('menu_config')->where($map)->select();
+                    </php>
+                    <volist name="menu" id="vo">
+                        <li>
+                            <a style="text-indent: 0px;" href="{$vo.url}">
+                                <i class="{$vo.icon}"></i>
+                                &nbsp;&nbsp;&nbsp;{$vo.title}
+                            </a>
+                        </li>
+                    </volist>
+    					
+				   <li id="signout" style="padding: 5px 0px">
+                    <a onclick="logout();">
+                        <i class="am-icon-sign-out"></i>
+                        &nbsp;&nbsp;&nbsp;退出
+                    </a>
+                   </li>
+
+                    <php>
+                        }else{
+                    </php>
+                 
+				 <li style="display: block;font-size: 18px ;">
+                    <a id="signin" href="{:U('mob/Member/index')}">
+                        <i class="am-icon-sign-in"></i>
+                        &nbsp;&nbsp;&nbsp;登录
+                    </a>
+				 </li>
+				  <php>
+                      }
+                   </php>
+                
+	            </ul>
+	
+
+	</div>
+  <div class="am-modal-actions-group">
+    <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+  </div>
+</div>
+
+
+<div class="am-modal-actions" id="my-action1">
+  <div class="am-modal-actions-group">
+    <ul class="am-list">
+  
+   	           
+				 <php>
+                     
+				        $map['flag']=1;
+						$map['group']=2;
+						$menu=M('menu_config')->where($map)->select();	 
+                 </php>
+			
+					  <volist name="menu" id="vo">
+                        <li>
+                            <a style="text-indent: 0px;" href="{$vo.url}">
+                                <i class="{$vo.icon}"></i>
+                                &nbsp;&nbsp;&nbsp;{$vo.title}
+                            </a>
+                        </li>
+                    </volist>				
+
+	            </ul>
+	
+
+	</div>
+  <div class="am-modal-actions-group">
+    <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+  </div>
+</div>
+
+
+
+
+
+<div class="am-modal-actions" id="my-action2">
+  <div class="am-modal-actions-group">
+				  <ul class="am-list">
+   			     <php>
+                    
+						$map['flag']=1;
+						$map['group']=3;
+						$menu=M('menu_config')->where($map)->select();
+                 </php>
+				  <volist name="menu" id="vo">
+                        <li>
+                            <a style="text-indent: 0px;" href="{$vo.url}">
+                                <i class="{$vo.icon}"></i>
+                                &nbsp;&nbsp;&nbsp;{$vo.title}
+                            </a>
+                        </li>
+				  </volist>	 
+ 
+					
+
+
+	            </ul>
+	
+
+	</div>
+  <div class="am-modal-actions-group">
+    <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+	  <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+      id="" style="height: 45px;">
+      <ul class="am-navbar-nav am-cf am-avg-sm-4">
+
+	     	  <php>
+            			$map['flag']=1;
+						$map['group']=99;
+						$mainmenu=M('menu_config')->where($map)->select();
+                 </php>
+
+		 <volist name="mainmenu" id="vo">
+		   <li >
+            <a href="javascript: void(0)"  data-am-modal="{$vo.url}">
+                 <span class="{$vo.icon}"></span>
+                <span class="am-navbar-label">{$vo.title}</span>
+            </a>
+          </li>
+		   </volist>	
+		  
+     
+
+		   <!--li data-am-navbar-share>
+            <a href="###" class="">
+                  <span class="am-icon-share-square-o"></span>
+                <span class="am-navbar-label">分享</span>
+            </a>
+          </li-->
+		  
+
+      </ul>
+  </div>	
+  
+  <script>
+    var uid = '{:is_login()}';
+    $(document).ready(function () {
+        signout();
+        if (uid > 0) {
+            $('#user').show()
+            $('#signin').hide()
+            $('#signout').show()
+        } else {
+            $('#user').hide()
+            $('#signin').show()
+            $('#signout').hide()
+        }
+
+    });
+
+function logout() {
+            $.post("{:U('Mob/Member/logout')}", {}, function (msg) {
+                if (msg.status == 1) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                    toast.success('退出成功!');
+                } else {
+                    toast.error(msg.info);
+                }
+            }, 'json')
+    }
+	
+  $(function() {
+    var id = '#offcanvas01';
+    var $myOc = $(id);
+    $('.doc-oc-js').on('click', function() {
+      $myOc.offCanvas($(this).data('rel'));
+    });
+
+    $myOc.on('open.offcanvas.amui', function() {
+      console.log(id + ' 打开了。');
+    }).on('close.offcanvas.amui', function() {
+      console.log(id + ' 关闭了。');
+    });
+  });	
+</script>

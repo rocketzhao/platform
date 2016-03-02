@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{:L('message')} | {:modC('WEB_SITE_NAME','OpenSNS')}</title>
+    <include file="Head/head"/>
+    <link rel="stylesheet" href="__CSS__/message.css"/>
+</head>
+<body class="user-body">
+<header data-am-widget="header" class="am-header am-header-default am-header-fixed am-cf">
+    <div class="am-header-left am-header-nav">
+        <a href="{:U('weibo/index')}" class="am-fl">
+            <i class="am-header-icon am-icon-home"></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">
+        消息中心
+    </h1>
+
+    <div class="am-header-right am-header-nav">
+        <a href="{:U('weibo/addweibo')}" class="am-fl">
+            <i class="am-header-icon am-icon-pencil"></i>
+        </a>
+        <a href="#nav-link" class="">
+            <i class="am-menu-toggle-icon am-icon-bars"></i>
+        </a>
+    </div>
+
+
+</header>
+{:W('Mob/UserMenu/index')}
+<div class="collect-container">
+    <div class="am-tabs" id="message">
+        <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify" style="font-size: 12px">
+            <li class="am-active"><a href="" style="padding: 0px">帖子收藏</a></li>
+        </ul>
+        <div class="am-tabs-bd" style="border: none;font-size: 12px">
+            <div class="am-tab-panel am-active ">
+                <div class=" am-g am-cf message" style="border-bottom: 1px solid #dedede;">
+                    <div class="am-fl" style="padding: 0px">
+                        <img style="width: 48px;height: 48px" class="am-circle"
+                             src="Application/Mob/Static/test/551931edeecf0.jpg">
+                    </div>
+                    <div class="am-fl"style="margin-left: 10px">
+                        <div class="">
+                            <a href="">默认板块</a>
+                            <span class="">阿拉啦啦啦</span>
+                        </div>
+                        <div class="am-cf">
+                            <a class="am-fl"> admin</a>
+                            <span class="am-fl">
+                            <p>发布：05月08日 16:05</p>
+                            <p>回复：05月08日 16:05</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="am-fr">
+                        <span class="am-icon-eye">4</span>
+                        <span class="am-icon-comments" style="margin-left: 10px">4</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('#message').tabs();
+        })
+    </script>
+</div>
+
+
+
+

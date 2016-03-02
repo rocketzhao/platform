@@ -1,0 +1,100 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/people.css"/>
+        <div class="am-header-left am-header-nav">
+            <div class="am-header-left am-header-nav">
+                <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+            </div>
+
+        </div>
+        <h1 class="am-header-title">
+            预订信息
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="{:U('Mob/message/index')}" class="">
+                <i class="am-header-icon am-icon-bell-o"></i>
+            </a>
+            <a href="#nav-link" class="">
+            </a>
+        </div>
+    </div>
+</block>
+<block name="mob_body">
+<!--div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+  <input type="text" class="am-form-field" placeholder="日历" data-am-datepicker="{theme: 'success'}" >
+  <span class="am-input-group-btn am-datepicker-add-on">
+    <button class="am-btn am-btn-success" type="button"><span class="am-icon-calendar"></span> </button>
+  </span>
+</div-->
+
+    <div class="people-container">
+        <form class="am-form" action="{:U('Mob/Issue/table')}" method="post" style="margin-top: 10px;">
+            <div class="am-input-group">
+                <input type="text" value="{$_GET['keywords']}" name="keywords" class="am-form-field" placeholder="菜品名称">
+                <span class="am-input-group-btn">
+                    <button class="am-btn am-btn-primary" type="submit">
+                        <span class="am-icon-search">查找</span>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <div class="people-list-box ">
+            <notempty name="page_data.data">
+                <ul class="people-list am-avg-sm-2 am-avg-md-3 am-avg-lg-5">
+                    <volist name="page_data.data" id="people">
+                        <li>
+                            <div class="people-box ">
+                                <div class="am-cf">
+                                    <div class="avatar">
+                                        <img class="am-img-thumbnail am-circle" style="width:50px;height: 50px;"
+                                             src="{$people.cover_url}">
+                                    </div>
+                                    <div class="info ">
+                                        <div class="name">
+										<span>{$people.title}</span>
+                                         </div>
+                                        <div class="signature">
+
+                                         开始时间：{$people.issue_time}									                                  </div>
+                                        <!--div class="fans-count">
+                                         <span>参与人数：{$people.count}</span>
+                                        </div-->
+                                    </div>
+                                </div>
+										
+					 <if condition="$people.status eq -1">
+						<a href="{:U('Mob/Issue/issuedetail',array('id'=>$people[id]))}" class="am-btn-sm am-btn-warning am-round">
+						 &nbsp<span class="am-icon-phone"></span>未预订 &nbsp
+															
+						</a>
+					</if>
+					<if condition="$people.status eq 0">
+						<a href="{:U('Mob/Issue/issuedetail',array('id'=>$people[id]))}" class="am-btn-sm am-btn-secondary am-round">
+						 &nbsp<span class="am-icon-coffee"></span>预订申请 &nbsp
+															
+						</a>
+					</if>	
+					<if condition="$people.status egt 1">
+						<a href="{:U('Mob/Issue/issuedetail',array('id'=>$people[id]))}" class="am-btn-sm am-btn-success am-round">
+						 &nbsp<span class="am-icon-check-square"></span>已预订 &nbsp
+															
+						</a>
+					</if>		
+                               
+                             
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+                <else/>
+                <div style=""><p>没有满足条件的结果~</p></div>
+            </notempty>
+            <div style="width: 100%;text-align: center;">{$page_data.html}</div>
+        </div>
+    </div>
+	
+	<include file="listmenu"/>
+
+</block>

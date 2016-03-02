@@ -1,0 +1,98 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/weibo.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/weibo.css"/>
+    <div class="weibo-container ">
+	<!-- 链接触发器， href 属性为目标元素 ID -->
+
+	
+	
+
+        <ul class="weibo-list list ulclass" id="article_list_ul">
+
+            <notempty name="weibo">
+                <volist name="weibo" id="vl">
+                    <include file="_weibolist"/>
+                </volist>
+                <else/>
+                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                </div>
+            </notempty>
+
+        </ul>
+        <notempty name="weibo">
+            <if condition="$pid.count eq 1">
+                <if condition="$pid.is_allweibo eq 1">
+                    <div class="am-list-news-ft look-more">
+                        <a id="getmore" data-url="{:U('Mob/Weibo/addMoreWeibo')}"
+                                >查看更多 &raquo;</a>
+                    </div>
+
+                </if>
+                <if condition="$pid.is_myfocus eq 1">
+                    <div class="am-list-news-ft look-more">
+                        <a id="getmorefocus" data-url="{:U('Mob/Weibo/addMoreMyFocus')}"
+                                >查看更多 &raquo;</a>
+                    </div>
+                </if>
+                <if condition="$pid.is_hotweibo eq 1">
+                    <div class="am-list-news-ft look-more">
+                        <a id="getmorehotweibo" data-url="{:U('Mob/Weibo/addMoreHotWeibo')}"
+                                >查看更多 &raquo;</a>
+                    </div>
+                </if>
+            </if>
+        </notempty>
+    </div>
+
+
+<!-- 侧边栏内容 -->
+	<include file="weibo_listmenu"/>
+
+<script>
+  $(function() {
+    var id = '#offcanvas01';
+    var $myOc = $(id);
+    $('.doc-oc-js').on('click', function() {
+      $myOc.offCanvas($(this).data('rel'));
+    });
+
+    $myOc.on('open.offcanvas.amui', function() {
+      console.log(id + ' 打开了。');
+    }).on('close.offcanvas.amui', function() {
+      console.log(id + ' 关闭了。');
+    });
+  });
+</script>	
+<!--	
+    <div data-am-widget="navbar" class="am-navbar am-navbar-default am-cf " id="">
+
+
+        <ul class="am-navbar-nav am-cf am-avg-sm-4" style="padding: 0px;font-size: 13px;background: #FCB4D2;">
+            <li
+            <if condition="ACTION_NAME eq 'index'"> style="background: #FF96F2;"</if>
+            >
+            <a style="color: white" href="{:U('Mob/Weibo/index')}">
+                全站动态
+            </a>
+            </li>
+            <li
+            <if condition="ACTION_NAME eq 'hotweibo'"> style="background: #FF96F2"</if>
+            >
+            <a style="color: white" href="{:U('Mob/Weibo/hotWeibo')}">
+                热门微博
+            </a>
+            </li>
+            <li
+            <if condition="ACTION_NAME eq 'myfocus'"> style="background: #FF96F2"</if>
+            >
+            <a style="color: white" href="{:U('Mob/Weibo/myFocus')}">
+                我的关注
+            </a>
+            </li>
+        </ul>
+
+    </div>
+-->
+</block>

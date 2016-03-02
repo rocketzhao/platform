@@ -1,0 +1,319 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class="addissue-container ">
+    <div class="addissue " id="article-post">
+        <form class="am-form " id="send_issue" data-am-validator data-url="{:U('Mob/Issue/doSendorder')}">
+            <input type="hidden" id="one_img_id" name="one_attach_id" value="{$issue.cover_id}">
+            <input type="hidden" name="issueId" value="{$issue.id}">
+			<input type="hidden" name="discount" id="discount" value="0">
+			<input type="hidden" name="orderid" id="orderid" value="0">
+			<input type="hidden" name="price" id="price" value="{$issue.url}">
+			
+            <!--插入图片结束-->
+            <fieldset>
+			<div class="am-cf">
+            <h2>亲爱的会员：</h2>
+			<span>请完成下列信息的填写，菜品费用{$issue.url}元，提交报名申请！<span>
+			  </div>
+
+                <!--专辑分类-还有个JS联动-->
+                <div class="am-cf">
+                    <div><label for="issue_top">预订信息</label></div>
+
+                    <select id="issue_top" name="issue" class="form-control " style="width: 100%;float: left" readonly="true">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}"  <eq name="top['id']" value="$issue['issue_top']"> selected</eq> >
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+			  </div>
+			   <div class="am-cf">
+                    <select id="issue_second" name="url" class="form-control " style="width: 100%" readonly="true">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}">
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+                </div>
+				
+				
+                <!--专辑分类-还有个JS联动end-->
+				
+				<div class="am-form-group">
+                    <label for="title">菜品名：</label>
+                    <input type="text" id="title" name="title" minlength="3" placeholder="" readonly="true" value="{$issue.title}"
+                           required/>
+                </div>
+
+
+                <!--div class="am-form-group">
+                    <label for="url">课程时间：</label>
+                    <if condition="$issue.is_edit eq 1">
+                        <input type="date" id="url" name="url"  value="{$issue.url}" readonly="true" required/>
+                    </if>
+                    <if condition="$issue.is_edit  eq 0">
+                        <input type="date" id="url" name="url" value="" required/>
+                    </if>
+                </div-->
+				
+				
+				<div class="am-form-group">
+				  <volist name="info[1]" id="vo2">
+				   <label>{$key}</label>
+					<input type="text"  value="{$vo2}" name="{$key}" />
+         
+                 </volist>
+				   
+                </div>
+			   <div class="am-form-group am-form-error">
+			   <label for="payment">选择缴费方式</label>
+                    <select id="payment" name="payment" class="form-control" style="width: 100%">
+                             <option value="支付宝" selected>支付宝</option>
+                             <option value="微信支付" >微信支付</option>
+                   
+                    </select>
+                </div>
+				
+			  <!--div class="am-form-group am-form-error">
+			   <label for="present">是否需要乘坐班车</label>
+                    <select id="takebus" name="takebus" class="form-control" style="width: 100%" onchange="buscntshow();">
+                              <option value="是" selected>是(具体信息由客服通知) </option>
+                             <option value="否">不需要</option>
+                   
+                    </select>
+               </div>
+				
+			  	<div class="am-form-group am-form-error" id="buscntshow" >
+			   <label for="present">特需保温包装</label>
+                    <select id="buscnt" name="buscnt" class="form-control"  style="width: 100%" onchange="count1();" >
+                             <option value="1" selected>初级</option>
+                             <option value="2">中级</option>
+							 <option value="3">高级</option>
+                   
+                    </select>
+               </div-->	
+				
+				
+			  <div class="am-form-group am-form-error">
+								 <label for="count">预定份数</label>
+                                 <select id="count" name="count" onchange="count1();">
+                                                        <option value="1">预定1份</option>
+                                                        <option value="2">预定2份</option>
+                                                        <option value="3">预定3份</option>
+                                                        <option value="4">预定4份</option>
+														<option value="5">预定5份</option>
+                                                        <option value="6">预定6份</option>
+														<option value="7">预定7份</option>
+                                                        <option value="8">预定8份</option>
+													    <option value="9">预定9份</option>
+														<option value="10">预定10份</option>
+                                                        
+                                                </select>
+                </div>
+				
+				<div data-role="fieldcontain">
+						<label for="c_comments">备注信息：</label>
+						<textarea  id="c_comments" name="c_comments" >
+						</textarea>
+				 </div>				
+				 <div class="am-form-group am-form-error">
+				<h2 id="sumfee">费用金额为：0元</h2> 
+				 </div>
+                <button type="button" id="confirm" class="am-btn am-btn-primary am-btn-block" data-am-modal="{target: '#my-actions'}">  <i class="am-icon-shopping-cart"></i>预订</button>
+            </fieldset>
+        </form>
+
+    </div>
+	
+	<!------------>
+
+
+
+<div class="am-popup" id="my-actions">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title" id="ordname">订单信息确认</h4>
+      <span data-am-modal-close  class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd" id="info">
+      ...
+    </div>
+			<div class="am-panel am-panel-danger" id="rule">
+			  <div class="am-panel-hd"> 注意事项</div>
+			  <div class="am-panel-bd" style="color:red;">
+				1. 如中途结束预定，未发送菜品无条件退款<br/>
+                2. 我们所拍摄的会议受国家、公司政策和气候影响可能会有略微调整，如有顾虑，请联系我们客服<br/>
+                3. 参与客户需要提前2周预定预定，如需取消，请提前一周告知<br/>
+                4. 对任何食品、花粉、植物、动物、药物或者其他物品过敏，请提前通知客服<br/>
+
+			  </div>
+			</div>	
+					
+
+	<div class="am-modal-footer">
+      <span class="am-modal-btn am-btn-default " data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn am-btn-success"  onclick="submitorder()" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+  
+</div>
+	
+	
+<script type="text/javascript">
+    add_one_img();
+    $('#confirm').click(function () {
+        var data = $("#send_issue").serialize();
+        var url = $("#send_issue").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+			
+			
+			 var data=msg.info;
+			 var cdata='';
+			 $('#discount').val(data.discount);
+			 $('#orderid').val(data.orderid);
+              cdata=data.comments;
+		
+			  //var cdata='testing';l
+			  document.getElementById('ordname').innerHTML ='<h4 class="am-popup-title" id="ordname">'+data.title+'订单'+'</h4>';
+			  document.getElementById('info').innerHTML = '<div class="am-popup-bd" > <ul class="am-list confirm-list"> <li>订单流水ID：&nbsp;'+data.orderid+'</li><li>会议时间:&nbsp;'+data.lesson_date+'</li><li>预定会员：&nbsp;'+data.name+'&nbsp;&nbsp;&nbsp;&nbsp;</li><li>手机号码:&nbsp;'+data.tel+'</li><li>预定份数：'+data.count+'&nbsp;&nbsp;</li></ul><ul  class="am-list confirm-list"><li>地址:'+data.addr+'</li>备注：<li>'+data.c_comments+'</li></ul><h2 style="color:red;">总计费用'+data.fee+'元![VIP优惠减免了'+(data.discount*data.price)+'元]</h2> <!--p>请于48小时内付款支付宝账号:<br/><p style="color:red">13651992892</p></p-->';
+        
+               /* toast.success('预订课程成功!');
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/Issue/index')}";
+                }, 1000);
+				*/
+            } else {
+			//  alert(msg.status );    
+			toast.error(msg.info );
+
+            
+            }
+        }, 'json');
+    });
+	
+ function buscntshow(){  
+      var ids = $('#takebus').val();
+      if (ids == '是' ) {
+	   // alert('选中');
+	    $('#buscntshow').css("display","inline");
+		count1();
+        } else {
+ 
+       $('#buscntshow').css("display","none");
+	   $('#buscnt').val(0); 
+        }
+		
+	}
+	
+function submitorder(){
+
+        var data = $("#send_issue").serialize();
+        var url = "{:U('Mob/Issue/confirmorder')}";
+        $.post(url, data, function (msg) {
+            if (msg.status == 0) {
+			
+                toast.success('预订成功!');
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/Issue/index')}";
+                }, 1000);
+			
+            } else {
+			        
+			toast.error('网络异常请重试!');
+
+            
+            }
+        }, 'json');
+	
+
+
+}	
+	
+	
+</script>
+<script>
+    $(function () {
+        $('#issue_top').change(function () {
+            var pid = $(this).val();
+			
+            $.post("{:U('Mob/Issue/selectDropdown')}", {pid: pid}, function (data) {
+                $('#issue_second').html('');
+				 $.each(data, function (index, element) {
+				            if(element.id == <?php echo $issue['issue_id']; ?>){
+                            $('#issue_second').append('<option value="' + element.id + '" selected>' + element.title + '</option>');
+							}else{
+							 $('#issue_second').append('<option value="' + element.id + '">' + element.title + '</option>');
+							}
+                        }
+						
+                )
+            }, 'json');
+		
+        });
+        $('#issue_top').change();
+		
+		 $('#issue_second').change(function () {
+            var pid = $(this).val();
+			var url="{:U('Mob/Issue/selecttitle')}";
+			 $.post(url, {'pid': pid}, function (msg) {
+			 
+			 if (msg.title == null) {
+			   $('#title').val('');
+		   	toast.error('无会议可选!');
+			
+            } else {
+			        
+			   $('#title').val('');
+			   $('#title').val(msg.title);
+            	toast.success('选择成功!');
+            }
+			 
+		
+			 
+				}, 'json');
+			
+		});
+		
+    })
+
+
+	function count1(){
+	 //var obj=document.getElementById('count'); 
+
+	 var value=$('#count').val(); 
+	 var ids = $('#takebus').val();
+
+	 for (var i=1;i<=4;i++){
+	 $('#'+i).css('display','none');
+	 }
+	 for (var i=1;i<=value;i++){
+	 $('#'+i).show();
+	 }
+	 
+
+     if (ids == '是' ) {
+	  var buscnt=$('#buscnt').val(); 
+     
+        } else {
+      var buscnt=0;
+	  $('#buscnt').val(0); 
+        }
+	
+     var price = $('#price').val();
+	 
+	 var sumcnt=price*value+50*buscnt;
+	 document.getElementById('sumfee').innerHTML = '<h2 id="sumfee">费用总计'+sumcnt+' 元!';
+	  
+
+  	  }		
+
+	  
+	  
+		
+</script>
+</block>

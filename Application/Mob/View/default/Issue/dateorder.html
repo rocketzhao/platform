@@ -1,0 +1,156 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body" >
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class="issue-container">
+	<include file="_pluspage"/>
+    <!--分类-->
+<div class="am-g">
+  <!--div class="am-u-sm-6">
+    设置禁用日期<br/>
+    <p><input type="text" class="am-form-field" placeholder="今天之前的日期被禁用" id="my-start-2"/>
+
+	</p>
+  </div-->
+  <!--div class="am-u-sm-6">
+    禁用日期<br/>
+    <p><input type="text" class="am-form-field" id="my-end-2" /></p>
+  </div-->
+  
+  <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
+	<span class="am-input-group-btn am-datepicker-add-on">
+		<button id="my-end-2" class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> 
+		</button>
+	  </span>
+  </div>
+  
+  <input type="hidden" class="am-form-field" placeholder="" id="count" value="{$count}"/>
+
+
+  
+</div>
+
+
+
+</div>
+
+
+
+  <div class="am-alert am-alert-success" id="my-alert" style="display: none">
+  <h1>今日为活动日期！</h1>
+
+  <p></p>
+  <span id="my-addr"></span><br/>
+  <span id="my-owner"></span><br/>
+  <span id="my-desc"></span>
+
+  </div>
+  
+  
+
+
+ 
+	<include file="listmenu"/>
+
+<script>
+//tool js
+       function getDate(strDate) {
+            var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/,
+             function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');
+            return date;
+        }
+		
+		function contains(arr, val) {
+        var val=val+'';
+	         if (arr.indexOf(val) !== -1) {
+			return true;
+			
+			//true
+		  } else {
+			return false;
+			//false
+		  }
+		}
+
+  /*
+  $(function() {
+
+    var id = '#offcanvas01';
+    var $myOc = $(id);
+    $('.doc-oc-js').on('click', function() {
+      $myOc.offCanvas($(this).data('rel'));
+    });
+
+    $myOc.on('open.offcanvas.amui', function() {
+      console.log(id + ' 打开了。');
+    }).on('close.offcanvas.amui', function() {
+      console.log(id + ' 关闭了。');
+    });
+	
+ 
+  });
+*/
+window.onload=function(){
+ $('#my-end-2 	').click();
+}
+
+
+  $(function() {
+  
+
+  
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var $myStart2 = $('#my-start-2');
+	
+ // 报名日期
+	var str = '{$dates}'; 
+	if(str == 'null'){
+		str= '["1446390000000"]';
+	}
+	var obj=JSON.parse(str);
+// 活动信息
+	var info = '{$issueid}'; 
+	var objinfo=JSON.parse(info)
+   // var date=getDate('2015-09-16');
+   // alert('3.'+contains(obj,date.valueOf()));	
+
+	
+     var checkout = $('#my-end-2').datepicker({
+      onRender: function(date) {	  
+	  
+	   if(contains(obj,date.valueOf())){
+	    return 'am-order';
+	   
+	   }else{
+	   
+	    return '';
+	   
+	   }
+      }
+    }).on('changeDate.datepicker.amui', function(ev) {
+	  var val=ev.date.valueOf()+'';
+	  var id=obj.indexOf(val);
+	  if ( id!== -1){
+	  $('#my-alert').find('h1').text(objinfo[id]['title']).end().show();  
+	  $('#my-alert').find('p').text('时间：'+objinfo[id]['issue_time']).end().show(); 
+	  $('#my-addr').text('地点：'+objinfo[id]['issue_addr']).end().show(); 
+	  $('#my-owner').text('负责人：'+objinfo[id]['owner']).end().show(); 
+      $('#my-desc').text('备注：'+objinfo[id]['desc']).end().show();   
+	  $('#my-map').show();
+	  }else{
+	  $('#my-alert').hide();  
+	  $('#my-map').hide();  
+	  $('#my-alert').find('h1').text('').end().show();  
+	  $('#my-alert').find('p').text('今日无活动!').end().show();  
+	  $('#my-alert').find('span').end().show();  
+	  }
+	
+      checkout.close();	
+    }).data('amui.datepicker');
+
+  })
+
+</script>
+
+</block>

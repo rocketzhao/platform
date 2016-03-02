@@ -1,0 +1,47 @@
+﻿<div class="am-modal-actions" id="my-actions">
+  <div class="am-modal-actions-group">
+    <ul class="am-list">
+      <li ><a class="am-modal-actions-warning" href="{:U('/mob/issue/table')}"><span class="am-icon-table"></span>会议日程</a></li>
+      <li><a href="{:U('mob/issue/index')}"><span class="am-icon-angellist"></span>公司信息</a></li>
+      <li class="am-modal-actions-danger">
+        <a href="{:U('mob/weibo/index')}"><i class="am-icon-weibo"></i>护理微博</a>
+      </li>
+    </ul>
+  </div>
+  <div class="am-modal-actions-group">
+    <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+  </div>
+</div>
+	  <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+      id="" style="height: 45px;">
+      <ul class="am-navbar-nav am-cf am-avg-sm-4">
+          <li >
+            <a href="sms:18121290121" class="">
+                  <span class="am-icon-phone"></span>
+                <span class="am-navbar-label">短消息</span>
+				 <span><br/></span>
+            </a>
+          </li>
+          <li data-am-navbar-share>
+            <a href="###" class="">
+                  <span class="am-icon-share-square-o"></span>
+                <span class="am-navbar-label">分享</span>
+            </a>
+          </li>
+          <li >
+            <a href="javascript: void(0)"  data-am-modal="{target: '#my-actions'}">
+                <span class="am-icon-github"></span>
+                <span class="am-navbar-label">菜单</span>
+            </a>
+          </li>
+          <li >
+            <a href="http://amazeui.org/getting-started" class="">
+                 <span class="am-icon-download"></span>
+                <span class="am-navbar-label">下载资料</span>
+            </a>
+          </li>
+
+      </ul>
+  </div>	
+  
+  

@@ -1,0 +1,386 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/user.js"></script>
+    <script src="__JS__/weibo.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/user.css"/>
+    <div class="user-container " style="padding: 0;">
+        <div class="">
+            <div style="width:100%">
+                <div class="bg_cover">
+                     <notempty name="user_info['cover_path']">
+                     <img src="{$user_info.cover_path}" style="width:100%;height: 200px">
+                         <else/>
+                         <img src="__IMG__/user_top_default_bg.jpg" style="width:100%;height: 200px">
+                         </notempty>
+
+                     </div>
+            </div>
+        </div>
+
+        <div class="" style="padding-left: 20px ;font-size: 12px;height: 80px ">
+            <div style="padding:10px;position: relative ;top: -40px;">
+                <div class="am-cf">
+                    <div class="am-fl" style="text-align: center">
+                        <div class="media-main">
+                            <img class="am-img-thumbnail am-circle" src="{$user_info.avatar64}"
+                                 style="width: 70px;height: 70px"></div>
+
+                        <!--<button  type="button" class="am-btn-small" style="color: #5d5d5d;font-size: 12px">
+                            <span>编辑</span>
+                        </button>-->
+
+                    </div>
+                    <div class="am-fl" style="margin-left: 10px">
+                        <div class="user_info"style="  text-shadow: 1px 1px 4px rgba(0,0,0,.6);
+  color: #fff;">
+                            <span>{$user_info.nickname}</span><br>
+                           <!-- 积分： <span>{$user_info.score}</span></span><br>
+                            等级：<span>{$user_info.title}</span--><br>
+                            <div style="color: #000000">
+							<button  type="button" class="am-btn am-btn-success" style="font-size: 12px" data-am-modal="{target: '#my-popup'}">
+                            <i class="am-icon-cog"></i><span>资料编辑</span>
+							
+							<button type="button" class="am-btn am-btn-warning" style="font-size: 12px" 
+										data-am-popover="{theme: 'danger sm', content: '申请成为VIP<br/>一次性付费5000元!<br/>可以享受12次活动特惠价格哦！'}"				>
+                            <i class="am-icon-user"></i><span>申请VIP</span>
+							
+		
+							
+                        </button>
+                               
+                            </div>
+                            <notempty name="user_info['tags']">
+                                <div class="">
+                    <span>
+                        个人标签：
+                        <volist name="user_info['tags']" id="tag">
+                            &nbsp;<a href="{:U('people/index/index',array('tag'=>$tag['id']))}"
+                                     class="label label-badge label-default">{$tag.title}</a>&nbsp;
+                        </volist>
+                    </span>
+                                </div>
+                            </notempty>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="signature" style="width: 100%"><span>用户等级：
+                <if condition="$user_info['vip'] eq ''">
+                    普通用户
+                    <else/>
+                    <attr >{$user_info['vip'].title},[剩余次数：{$user_info['vip'].count}]</attr>
+                </if>
+            </span>
+                </div>
+            </div>
+        </div>
+        <div class="tab">
+            <div class="user-mod ">
+                <div id="carousel" style="position: relative;height: 37px;">
+
+                    <div id="user-list">
+                        <!--a href="{:U('Mob/User/index',array('tab'=>'weibo','uid'=>$_GET['uid']))}"
+                        <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')"> class="current"</if>
+                        >微博</a>
+                        <a href="{:U('Mob/User/index',array('tab'=>'userhead','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'userhead'"> class="current"</if>
+                        >头衔</-->
+                        <a href="{:U('Mob/User/index',array('tab'=>'order','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'order'"> class="current"</if>
+                        >预订课程信息</>						
+						
+                        <a href="{:U('Mob/User/index',array('tab'=>'userdata','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'userdata'"> class="current"</if>
+                        >个人资料</a>
+                        <!--a href="{:U('Mob/User/index',array('tab'=>'focus','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'focus'"> class="current"</if>
+                        >关注</a-->
+                        <!--       <li><a>问答</a></li>-->
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="part-tab-con">
+                <div class="imgshow">
+                    <div class="ulclass">
+                        <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')">
+                            <notempty name="weibo">
+                                <volist name="weibo" id="vo">
+                                    <include file="_myweibo"/>
+                                </volist>
+                                <else/>
+                                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                                </div>
+                            </notempty>
+                        </if>
+                    </div>
+                    <!--div class="ulclass">
+                        <if condition="$_GET['tab'] eq 'news'">
+                            <notempty name="blog">
+                                <volist name="blog" id="vl">
+                                    <include file="_myblog"/>
+                                </volist>
+                                <else/>
+                                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                                </div>
+                            </notempty>
+
+                        </if>
+
+                    </div-->
+					 <div>
+                        <if condition="$_GET['tab'] eq 'order'">
+                            <include file="_myorder"/>
+                        </if>
+
+                    </div>
+					
+                    <!--div>
+                        <if condition="$_GET['tab'] eq 'userhead'">
+                            <include file="_myrank"/>
+                        </if>
+
+                    </div-->
+                    <div>
+                        <if condition="$_GET['tab'] eq 'userdata'">
+                            <include file="_myinformation"/>
+                        </if>
+
+                    </div>
+                    <php>
+                        if (is_login()==$uid) {
+                    </php>
+                    <div>
+                        <if condition="$_GET['tab'] eq 'focus'">
+                            <include file="_myfollowing"/>
+                        </if>
+                    </div>
+                    <php>
+                        }else{
+                    </php>
+                    <if condition="$_GET['tab'] eq 'focus'">
+                        <include file="_otherfollowing"/>
+                    </if>
+                    <php>
+                        }
+                    </php>
+
+                </div>
+                <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')">
+                    <if condition="$weibo[0][pid_count] eq 1">
+                        <div class="am-list-news-ft look-more">
+                            <a id="getmoreweibolist" data-url="{:U('Mob/User/addMoreWeibo')}" data-role="{$uid}"
+                                    >查看更多 &raquo;</a>
+                        </div>
+                    </if>
+                </if>
+				<!--
+                <if condition="$_GET['tab'] eq 'news'">
+                    <if condition="$blog[0][pid_count] eq 1">
+                        <div class="am-list-news-ft look-more">
+                            <a id="getmorebloglist" data-url="{:U('Mob/User/addMoreBlog')}" data-role="{$uid}"
+                                    >查看更多 &raquo;</a>
+                        </div>
+                    </if>
+                </if>
+				-->
+            </div>
+        </div>
+<!------------------------------------->
+<div class="am-popup" id="my-popup">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title">资料编辑</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd">
+			
+            <volist name="profile_group_list" id="vo">
+			          <h2>{$vo.profile_name}</h2>
+                    <form class="am-form"  action="{:U('Config/edit_expandinfo')}"  data-url="{:U('Mob/User/save/',array('role_id' => $vo['id']))}" id="send_info_{$vo.id}" method="post" class="ajax-form" style="background-color: rgba(75, 204, 234, 0.56);">
+           
+                          <fieldset>
+                                            
+                               
+                                 <volist name="vo.info_list" id="vl">
+								    <div class="am-cf">	  
+									   
+									    <if condition="$vl.field_name eq '儿童性别'">
+										 <label style="font-size: 17px;">{$vl.field_name}</label>
+										<select data-native-menu="false"  name="{$key}">
+										<option >选择儿童性别</option>
+										<option value="男" <if condition="$vl.field_data eq '男'"> selected </if> >男孩</option>
+										<option value="女" <if condition="$vl.field_data eq '女'"> selected </if> >女孩</option>
+
+									   </select>
+								
+									   	<else /> 
+										<label style="font-size: 17px;">{$vl.field_name}</label>
+									   <input type="text" class="am-modal-prompt-input" name="{$key}" 
+									   <if condition="$vl.field_data eq '还未设置'">
+									   placeholder="{$vl.field_data}"
+										<else /> value="{$vl.field_data}"
+										</if> > 
+										
+										
+										</if> 
+									   
+									</div>
+										
+                                 </volist>
+                              
+                                 <if condition="count($vo['info_list']) neq 0">
+								 <button class="am-btn am-btn-secondary am-btn-block" onclick="submitinfo({$vo.id})" id="submit_btn" data-am-modal-close>保存{$vo.profile_name}</button>
+							
+							
+                                 <else/>
+                                    <span class="expandinfo-noticeinfo">该扩展信息分组没有信息！</span>
+                                </if>
+                        
+                        </fieldset>
+                 
+                </form>
+             
+
+            </volist>
+
+	  
+	  
+    </div>
+  </div>
+</div>
+
+<!------
+<div class="am-popup" id="my-pic">
+  <div class="am-popup-inner">
+    <div class="am-popup-hd">
+      <h4 class="am-popup-title">修改头像</h4>
+      <span data-am-modal-close
+            class="am-close">&times;</span>
+    </div>
+    <div class="am-popup-bd">
+		  
+	<hongphp>
+        $user = query_user(array('avatar128'));
+    </hongphp>
+
+	
+ <div class="row">
+
+        <div class="ucenter-avatar col-xs-12">
+
+            <hongphp>if(file_exists('./api/uc_login.lock')){
+                include_once './api/uc_client/client.php';
+                $html = uc_avatar(is_login());
+            </hongphp>
+            {$html}
+            <hongphp>}else{</hongphp>
+
+
+
+            {hongphp:W('Ucenter/UploadAvatar/render',array('uid'=>is_login()))}
+
+
+            <hongphp>}</hongphp>
+
+
+        </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+----->
+<!------------------------------------->
+    </div>
+    <script src="__JS__/iscroll.js"></script>
+    <script>
+
+
+        var $carousel = document.getElementById('carousel'),
+                $box = document.getElementById('user-list'),
+
+                aArray = $box.querySelectorAll('a'),
+
+                aNum = aArray.length;
+        console.log(aNum);
+        console.log($("#user-list a:first-child").width());
+        $box.style.width = (aNum * $("#user-list a:first-child").width() + 10 + 'px');
+        console.log($box.style.width);
+
+        var myScroll = new iScroll('carousel', {
+            hideScrollbar: false,
+            hScroll: true,
+            bounce: true,
+            vScroll: false,
+            hScrollbar: false
+
+        });
+
+		
+	function submitinfo(id){
+
+        var data = $("#send_info_"+id).serialize();
+		 var url = $("#send_info_"+id).attr('data-url');
+     //   var url = "{:U('Mob/User/save')}";
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+			   if(msg.oper == 'update'){
+                toast.success('保存信息成功!');}else{
+				toast.success('新增信息成功!');
+				}
+			
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/user/index')}";
+                }, 1000);
+			
+            }else {
+			        
+			toast.error('网络异常请重试!');
+
+            
+            }
+        }, 'json');
+	
+
+
+   }	
+   
+   
+   	function submitvip(id){
+     /*onclick="submitvip({$user_info.uid});"*/
+	    var data={'uid': id};
+     /*   var url = "{:U('Mob/User/vip')}";*/
+	   var url="dddd";
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+			   if(msg.oper == 'add'){
+					toast.success('申请信息递交成功!');
+			   }else{
+					toast.success(msg.msg);
+					}
+				
+					setTimeout(function () {
+						window.location.href= "{:U('Mob/user/index')}";
+					}, 500);
+				
+            }else { 
+			toast.error('网络异常请重试!');            
+            }
+        }, 'json');
+	
+
+
+   }	
+   
+   
+		
+		
+    </script>
+</block>
